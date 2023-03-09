@@ -1,5 +1,5 @@
 /*!
- * HTMLMinifier v4.0.0 (https://kangax.github.io/html-minifier/)
+ * HTMLMinifier v4.0.1 (https://kangax.github.io/html-minifier/)
  * Copyright 2010-2019 Juriy "kangax" Zaytsev
  * Licensed under the MIT license
  */
@@ -25144,20 +25144,7 @@ function cleanAttributeValue(tag, attrName, attrValue, options, attrs) {
   }
   else if (isSrcset(attrName, tag)) {
     // https://html.spec.whatwg.org/multipage/embedded-content.html#attr-img-srcset
-    attrValue = trimWhitespace(attrValue).split(/\s+,\s*|\s*,\s+/).map(function(candidate) {
-      var url = candidate;
-      var descriptor = '';
-      var match = candidate.match(/\s+([1-9][0-9]*w|[0-9]+(?:\.[0-9]+)?x)$/);
-      if (match) {
-        url = url.slice(0, -match[0].length);
-        var num = +match[1].slice(0, -1);
-        var suffix = match[1].slice(-1);
-        if (num !== 1 || suffix !== 'x') {
-          descriptor = ' ' + num + suffix;
-        }
-      }
-      return options.minifyURLs(url) + descriptor;
-    }).join(', ');
+	// Removed due to CVE-2022-37620.
   }
   else if (isMetaViewport(tag, attrs) && attrName === 'content') {
     attrValue = attrValue.replace(/\s+/g, '').replace(/[0-9]+\.[0-9]+/g, function(numString) {
